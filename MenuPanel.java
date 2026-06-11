@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 public class MenuPanel extends JPanel implements ActionListener {
 
     private MainFrame mainFrame;
+    private JButton startButton;
+    private JButton instructionsButton;
+    private JButton exitButton;
 
     public MenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -20,32 +23,34 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(titleLabel);
 
         ImageIcon planeIcon = new ImageIcon("assets/pngtree-realistic-passenger-airplane-in-mid-flight-isolated-on-transparent-background-png-image_15788014.png");
-        Image planeImage = planeIcon.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
-        JLabel planeLabel = new JLabel(new ImageIcon(planeImage));
-        planeLabel.setBounds(400, 180, 400, 200);
+        JLabel planeLabel = new JLabel(planeIcon);
+        planeLabel.setBounds(350, 180, 500, 250);
         add(planeLabel);
 
-        JButton startButton = new JButton("Start Simulation");
+        startButton = new JButton("Start Simulation");
         startButton.setBounds(450, 450, 300, 50);
+        startButton.addActionListener(this);
         add(startButton);
 
-        JButton instructionsButton = new JButton("Instructions");
+        instructionsButton = new JButton("Instructions");
         instructionsButton.setBounds(450, 520, 300, 50);
         instructionsButton.addActionListener(this);
         add(instructionsButton);
 
-        JButton exitButton = new JButton("Exit");
+        exitButton = new JButton("Exit");
         exitButton.setBounds(450, 590, 300, 50);
         exitButton.addActionListener(this);
         add(exitButton);
     }
 
     public void actionPerformed(ActionEvent e) {
-        String text = ((JButton) e.getSource()).getText();
-
-        if (text.equals("Instructions")) {
+        if (e.getSource() == startButton) {
+            mainFrame.showSimulation();
+        }
+        if (e.getSource() == instructionsButton) {
             mainFrame.showInstructions();
-        } else if (text.equals("Exit")) {
+        }
+        if (e.getSource() == exitButton) {
             System.exit(0);
         }
     }

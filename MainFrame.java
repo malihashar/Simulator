@@ -1,35 +1,51 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class MainFrame extends JFrame {
 
-    private CardLayout cardLayout;
-    private JPanel cardPanel;
+    private MenuPanel menuPanel;
+    private InstructionPanel instructionPanel;
+    private SimulationPanel simulationPanel;
 
     public MainFrame() {
         setTitle("Flight Physics Simulator");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(null);
 
-        cardLayout = new CardLayout();
-        cardPanel = new JPanel(cardLayout);
+        menuPanel = new MenuPanel(this);
+        instructionPanel = new InstructionPanel(this);
+        simulationPanel = new SimulationPanel();
 
-        MenuPanel menuPanel = new MenuPanel(this);
-        InstructionPanel instructionPanel = new InstructionPanel(this);
+        menuPanel.setBounds(0, 0, 1200, 800);
+        instructionPanel.setBounds(0, 0, 1200, 800);
+        simulationPanel.setBounds(0, 0, 1200, 800);
 
-        cardPanel.add(menuPanel, "menu");
-        cardPanel.add(instructionPanel, "instructions");
+        add(menuPanel);
+        add(instructionPanel);
+        add(simulationPanel);
 
-        add(cardPanel);
+        instructionPanel.setVisible(false);
+        simulationPanel.setVisible(false);
     }
 
     public void showMenu() {
-        cardLayout.show(cardPanel, "menu");
+        menuPanel.setVisible(true);
+        instructionPanel.setVisible(false);
+        simulationPanel.setVisible(false);
     }
 
     public void showInstructions() {
-        cardLayout.show(cardPanel, "instructions");
+        menuPanel.setVisible(false);
+        instructionPanel.setVisible(true);
+        simulationPanel.setVisible(false);
+    }
+
+    public void showSimulation() {
+        menuPanel.setVisible(false);
+        instructionPanel.setVisible(false);
+        simulationPanel.setVisible(true);
+        simulationPanel.updateVariables();
     }
 
     public static void main(String[] args) {
